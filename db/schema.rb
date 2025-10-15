@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_04_084213) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_15_111015) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -21,5 +21,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_04_084213) do
     t.integer "clicks"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "comments", default: 0, null: false
+    t.integer "dislikes", default: 0, null: false
   end
 end
