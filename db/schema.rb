@@ -15,22 +15,43 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_05_073701) do
   enable_extension "pg_catalog.plpgsql"
 
   create_table "accounts", force: :cascade do |t|
+    t.integer "account_id"
+    t.string "platform"
+    t.string "username"
+    t.integer "likes"
+    t.integer "clicks"
+    t.integer "comments"
+    t.integer "dislikes"
+    t.integer "posts_count"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "platforms", force: :cascade do |t|
+    t.string "platform_name"
+    t.string "icon_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "stats", force: :cascade do |t|
+    t.bigint "account_id"
+    t.integer "followers"
+    t.integer "likes"
+    t.integer "posts"
+    t.date "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_stats_on_account_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "name"
+    t.string "username"
+    t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
+  add_foreign_key "stats", "accounts"
 end
