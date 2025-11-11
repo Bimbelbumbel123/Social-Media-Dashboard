@@ -8,8 +8,7 @@ module Api
           {
             id: acc.id,
             username: acc.username,
-            # prefer joined platform name but keep old platform string too
-            platform: acc.platform_name_resolved,
+            platform: acc.platform_name,
             platform_icon: acc.platform&.icon_url,
             likes: acc.likes,
             clicks: acc.clicks,
