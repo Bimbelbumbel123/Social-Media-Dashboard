@@ -1,0 +1,17 @@
+<div class="bg-white shadow-md rounded-2xl p-4 flex flex-col justify-between">
+  <div class="flex items-center space-x-3 mb-3">
+    <img [src]="getPlatformIcon(account.platform)" class="w-10 h-10 rounded-full" alt="{{account.platform}}">
+    <div>
+      <h3 class="font-semibold">{{ account.username }}</h3>
+      <p class="text-sm text-gray-500">{{ account.platform }}</p>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-2 gap-2 text-sm text-gray-700">
+    <div><b>Likes:</b> {{ account.likes }}</div>
+    <div><b>Clicks:</b> {{ account.clicks }}</div>
+    <div><b>Comments:</b> {{ account.comments }}</div>
+    <div><b>Dislikes:</b> {{ account.dislikes }}</div>
+    <div class="col-span-2"><b>Posts:</b> {{ account.posts_count }}</div>
+  </div>
+</div>

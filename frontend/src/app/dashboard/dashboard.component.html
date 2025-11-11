@@ -1,0 +1,13 @@
+<div class="p-6">
+  <h1 class="text-3xl font-bold mb-6">Social Media Dashboard</h1>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <app-platform-card *ngFor="let account of accounts" [account]="account"></app-platform-card>
+  </div>
+
+  <!-- Stat Chart -->
+  <div class="mt-10">
+    <h2 class="text-xl font-semibold mb-3">Follower Growth</h2>
+    <app-stat-chart [data]="chartData"></app-stat-chart>
+  </div>
+</div>

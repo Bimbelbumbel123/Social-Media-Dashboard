@@ -1,16 +1,31 @@
-class Api::V1::Dashboard::DashboardController < ApplicationController
-  module Api
-    module V1
-      class DashboardController < ApplicationController
-        def index
-          user = User.find(params[:user_id])
-          accounts = user.accounts.includes(:platform, :stats)
+module Api
+  module V1
+    class DashboardController < ApplicationController
+      def index
+        accounts = Account.includes(:platform, :stats).all
 
-          render json: accounts.as_json(
-            include: { platform: {}, stats: {} },
-            methods: [ :latest_stat ]
-          )
-        end
+        render json: accounts.map { |acc|
+          {
+            id: acc.id,
+            username: acc.username,
+            # prefer joined platform name but keep old platform string too
+            platform: acc.platform_name_resolved,
+            platform_icon: acc.platform&.icon_url,
+            likes: acc.likes,
+            clicks: acc.clicks,
+            comments: acc.comments,
+            dislikes: acc.dislikes,
+            posts_count: acc.posts_count,
+            recent_stats: acc.stats.order(date: :desc).limit(7).map do |stat|
+              {
+                date: stat.date.strftime("%Y-%m-%d"),
+                followers: stat.followers,
+                likes: stat.likes,
+                posts: stat.posts
+              }
+            end
+          }
+        }
       end
     end
   end
