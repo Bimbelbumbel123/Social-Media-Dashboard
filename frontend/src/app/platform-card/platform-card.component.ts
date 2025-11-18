@@ -1,20 +1,34 @@
 import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Account } from './dashboard/dashboard.component';
 
 @Component({
   selector: 'app-platform-card',
   standalone: true,
-  templateUrl: './platform-card.component.html'
+  imports: [CommonModule],
+  templateUrl: './platform-card.component.html',
+  styleUrls: ['./platform-card.component.css']
 })
 export class PlatformCardComponent {
-  @Input() account: any;
+  @Input() account!: Account;
 
   getPlatformIcon(platform: string): string {
     const icons: Record<string, string> = {
-      YouTube: 'https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg',
-      TikTok: 'https://upload.wikimedia.org/wikipedia/en/a/a9/TikTok_logo.svg',
-      Instagram: 'https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg',
-      Twitch: 'https://upload.wikimedia.org/wikipedia/commons/3/3f/Twitch_icon.svg'
+      YouTube: 'https://cdn.simpleicons.org/youtube/white',
+      TikTok: 'https://cdn.simpleicons.org/tiktok/white',
+      Instagram: 'https://cdn.simpleicons.org/instagram/white',
+      Twitch: 'https://cdn.simpleicons.org/twitch/white'
     };
-    return icons[platform] || 'https://cdn-icons-png.flaticon.com/512/25/25231.png';
+    return icons[platform] || 'https://cdn.simpleicons.org/generic/white';
+  }
+
+  getPlatformColor(platform: string): string {
+    const colors: Record<string, string> = {
+      YouTube: 'from-red-500 to-red-600',
+      TikTok: 'from-pink-500 to-purple-600',
+      Instagram: 'from-purple-500 to-pink-500',
+      Twitch: 'from-purple-600 to-purple-700'
+    };
+    return colors[platform] || 'from-gray-500 to-gray-600';
   }
 }

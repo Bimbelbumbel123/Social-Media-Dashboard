@@ -1,35 +1,109 @@
-import { Component, Input, OnChanges } from '@angular/core';
-import { Chart, registerables } from 'chart.js';
-Chart.register(...registerables);
+import { Component, Input, OnInit, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ChartData } from '../dashboard.component';
+
+declare var Chart: any;
 
 @Component({
   selector: 'app-stat-chart',
   standalone: true,
-  templateUrl: './stat-chart.component.html'
+  imports: [CommonModule],
+  templateUrl: './stat-chart.component.html',
+  styleUrls: ['./stat-chart.component.css']
 })
-export class StatChartComponent implements OnChanges {
-  @Input() data: any[] = [];
-  chart: any;
+export class StatChartComponent implements AfterViewInit {
+  @Input() data!: ChartData[];
+  @ViewChild('chartCanvas', { static: false }) chartCanvas!: ElementRef<HTMLCanvasElement>;
+
+  private chart: any;
+
+  ngAfterViewInit() {
+    this.createChart();
+  }
 
   ngOnChanges() {
-    if (this.chart) this.chart.destroy();
-    const ctx = (document.getElementById('growthChart') as HTMLCanvasElement)?.getContext('2d');
-    if (!ctx) return;
+    if (this.chart) {
+      this.updateChart();
+    }
+  }
+
+  private createChart() {
+    const ctx = this.chartCanvas.nativeElement.getContext('2d');
 
     this.chart = new Chart(ctx, {
       type: 'line',
       data: {
-        labels: this.data.map(d => d.date),
-        datasets: [{
-          label: 'Followers',
-          data: this.data.map(d => d.followers),
-          borderColor: 'rgba(59,130,246,1)',
-          backgroundColor: 'rgba(59,130,246,0.2)',
-          fill: true,
-          tension: 0.3
-        }]
+        labels: this.data.map(d => d.month),
+        datasets: [
+          {
+            label: 'YouTube',
+            data: this.data.map(d => d.YouTube),
+            borderColor: '#FF0000',
+            backgroundColor: 'rgba(255, 0, 0, 0.1)',
+            tension: 0.4
+          },
+          {
+            label: 'TikTok',
+            data: this.data.map(d => d.TikTok),
+            borderColor: '#EE1D52',
+            backgroundColor: 'rgba(238, 29, 82, 0.1)',
+            tension: 0.4
+          },
+          {
+            label: 'Instagram',
+            data: this.data.map(d => d.Instagram),
+            borderColor: '#E4405F',
+            backgroundColor: 'rgba(228, 64, 95, 0.1)',
+            tension: 0.4
+          },
+          {
+            label: 'Twitch',
+            data: this.data.map(d => d.Twitch),
+            borderColor: '#9146FF',
+            backgroundColor: 'rgba(145, 70, 255, 0.1)',
+            tension: 0.4
+          }
+        ]
       },
-      options: { responsive: true }
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        aspectRatio: 2.5,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          tooltip: {
+            mode: 'index',
+            intersect: false,
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: false,
+            ticks: {
+              callback: function(value: number) {
+                return value.toLocaleString();
+              }
+            }
+          }
+        }
+      }
     });
+  }
+
+  private updateChart() {
+    this.chart.data.labels = this.data.map(d => d.month);
+    this.chart.data.datasets[0].data = this.data.map(d => d.YouTube);
+    this.chart.data.datasets[1].data = this.data.map(d => d.TikTok);
+    this.chart.data.datasets[2].data = this.data.map(d => d.Instagram);
+    this.chart.data.datasets[3].data = this.data.map(d => d.Twitch);
+    this.chart.update();
+  }
+
+  ngOnDestroy() {
+    if (this.chart) {
+      this.chart.destroy();
+    }
   }
 }
