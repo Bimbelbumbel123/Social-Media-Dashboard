@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PlatformCardComponent } from './platform-card/platform-card.component';
-import { StatChartComponent } from './stat-chart/stat-chart.component';
+import { PlatformCardComponent } from 'frontend/src/app/platform-card/platform-card.component';
+import { StatChartComponent } from 'frontend/src/app/stat-chart/stat-chart.component';
 
 export interface Account {
   platform: string;

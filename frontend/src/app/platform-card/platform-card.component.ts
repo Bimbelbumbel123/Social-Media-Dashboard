@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Account } from './dashboard/dashboard.component';
+import { Account } from 'frontend/src/app/dashboard/dashboard.component';
 
 @Component({
   selector: 'app-platform-card',
