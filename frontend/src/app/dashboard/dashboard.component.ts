@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PlatformCardComponent } from 'frontend/src/app/platform-card/platform-card.component';
-import { StatChartComponent } from 'frontend/src/app/stat-chart/stat-chart.component';
+import { PlatformCardComponent } from "../platform-card/platform-card.component";
+import { StatChartComponent } from "../stat-chart/stat-chart.component";
 
 export interface Account {
   platform: string;
@@ -40,6 +40,8 @@ export class DashboardComponent {
     { month: 'May', YouTube: 120000, TikTok: 84000, Instagram: 148000, Twitch: 45500 },
     { month: 'Jun', YouTube: 125000, TikTok: 89000, Instagram: 156000, Twitch: 45000 }
   ];
+  protected let: any;
+  protected account: any;
 
   get totalFollowers(): number {
     return this.accounts.reduce((sum, acc) => sum + acc.followers, 0);

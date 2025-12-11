@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ChartData } from 'frontend/src/app/dashboard/dashboard.component';
+import { ChartData } from '../dashboard/dashboard.component';
 
 declare var Chart: any;
 
