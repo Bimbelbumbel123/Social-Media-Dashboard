@@ -8,8 +8,7 @@ declare var Chart: any;
   selector: 'app-stat-chart',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './stat-chart.component.html',
-  styleUrls: ['./stat-chart.component.css']
+  templateUrl: './stat-chart.component.html'
 })
 export class StatChartComponent implements AfterViewInit {
   @Input() data!: ChartData[];

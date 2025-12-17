@@ -21,8 +21,7 @@ export interface ChartData {
   selector: 'app-dashboard',
   standalone: true,
   imports: [CommonModule, PlatformCardComponent, StatChartComponent],
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  templateUrl: './dashboard.component.html'
 })
 export class DashboardComponent {
   accounts: Account[] = [

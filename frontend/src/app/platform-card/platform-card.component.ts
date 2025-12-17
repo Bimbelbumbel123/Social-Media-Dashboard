@@ -6,8 +6,7 @@ import { Account } from "../dashboard/dashboard.component";
   selector: 'app-platform-card',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './platform-card.component.html',
-  styleUrls: ['./platform-card.component.css']
+  templateUrl: './platform-card.component.html'
 })
 export class PlatformCardComponent {
   @Input() account!: Account;
