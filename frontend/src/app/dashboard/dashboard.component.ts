@@ -4,6 +4,7 @@ import { PlatformCardComponent } from "../platform-card/platform-card.component"
 import { StatChartComponent } from "../stat-chart/stat-chart.component";
 
 export interface Account {
+  id: number;
   platform: string;
   followers: number;
   growth: number;
@@ -25,10 +26,10 @@ export interface ChartData {
 })
 export class DashboardComponent {
   accounts: Account[] = [
-    { platform: 'YouTube', followers: 125000, growth: 12.5 },
-    { platform: 'TikTok', followers: 89000, growth: 24.3 },
-    { platform: 'Instagram', followers: 156000, growth: 8.7 },
-    { platform: 'Twitch', followers: 45000, growth: -3.2 }
+    {id: 1, platform: 'YouTube', followers: 125000, growth: 12.5 },
+    {id: 2, platform: 'TikTok', followers: 89000, growth: 24.3 },
+    {id: 3, platform: 'Instagram', followers: 156000, growth: 8.7 },
+    {id: 4, platform: 'Twitch', followers: 45000, growth: -3.2 }
   ];
 
   chartData: ChartData[] = [
