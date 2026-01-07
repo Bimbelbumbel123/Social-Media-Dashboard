@@ -6,7 +6,8 @@ import { Account } from "../dashboard/dashboard.component";
   selector: 'app-platform-card',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './platform-card.component.html'
+  templateUrl: './platform-card.component.html',
+  styleUrls: ['./platform-card.component.scss']
 })
 export class PlatformCardComponent {
   @Input() account!: Account;
@@ -18,16 +19,6 @@ export class PlatformCardComponent {
       Instagram: 'https://cdn.simpleicons.org/instagram/white',
       Twitch: 'https://cdn.simpleicons.org/twitch/white'
     };
-    return icons[platform] || 'https://cdn.simpleicons.org/generic/white';
-  }
-
-  getPlatformColor(platform: string): string {
-    const colors: Record<string, string> = {
-      YouTube: 'from-red-500 to-red-600',
-      TikTok: 'from-pink-500 to-purple-600',
-      Instagram: 'from-purple-500 to-pink-500',
-      Twitch: 'from-purple-600 to-purple-700'
-    };
-    return colors[platform] || 'from-gray-500 to-gray-600';
+    return icons[platform] || 'https://simpleicons.org/generic/white';
   }
 }

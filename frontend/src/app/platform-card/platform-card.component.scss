@@ -1,0 +1,81 @@
+.platform-card {
+  border-radius: 12px;
+  padding: 16px;
+  color: white;
+  max-width: 250px;
+  margin: 16px auto;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-align: center;
+
+  &.YouTube {
+    background: #FF0000;
+  }
+
+  &.TikTok {
+    background: linear-gradient(to right, #69C9D0, #EE1D52);
+  }
+
+  &.Instagram {
+    background: linear-gradient(to right, #833AB4, #FD1D1D, #FCAF45);
+  }
+  &.Twitch {
+    background: linear-gradient(to right, #510c6c, #c53ff2);
+  }
+
+  .platform-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 12px;
+
+    .platform-icon {
+      width: 24px;
+      height: 24px;
+    }
+
+    .platform-name {
+      font-weight: bold;
+      font-size: 16px;
+    }
+  }
+
+  .followers {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 4px 0 0 0;
+  }
+
+  .label {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  .growth {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+
+    .positive {
+      color: #4ade80;
+      font-weight: 600;
+    }
+
+    .negative {
+      color: #f87171;
+      font-weight: 600;
+    }
+
+    .vs-last {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+  }
+}
+
+.platform-card {
+  flex: 0 1 300px;
+  min-width: 300px;
+  max-width: 320px;
+}

@@ -1,16 +1,20 @@
-<div
-    [ngClass]="getPlatformColor(account.platform)">
-  <div>
-    <span>{{ getPlatformIcon(account.platform) }}</span>
-    <span>{{ account.platform }}</span>
+<div [ngClass]="['platform-card', account.platform]">
+  <div class="platform-header">
+    <img
+      [src]="getPlatformIcon(account.platform)"
+      alt="{{ account.platform }} icon"
+      class="platform-icon"
+    />
+    <span class="platform-name">{{ account.platform }}</span>
   </div>
-  <h3>{{ account.followers | number }}</h3>
-  <p>Followers</p>
-  <div>
-    <span
-      [ngClass]="account.growth >= 0 ? 'text-green-200' : 'text-red-200'">
+
+  <h3 class="followers">{{ account.followers | number }}</h3>
+  <p class="label">Followers</p>
+
+  <div class="growth">
+    <span [ngClass]="account.growth >= 0 ? 'positive' : 'negative'">
       {{ account.growth >= 0 ? '↑' : '↓' }} {{ account.growth >= 0 ? account.growth : -account.growth }}%
     </span>
-    <span>vs last month</span>
+    <span class="vs-last">vs last month</span>
   </div>
 </div>

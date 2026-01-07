@@ -22,15 +22,14 @@
     </mat-card>
 
 
-    <div class="text-align-center max-width card-center">
-      @for (account of accounts; track account.id) {
-        <mat-card class="mb-5">
-          <app-platform-card
-            [account]="account">
-          </app-platform-card>
-        </mat-card>
-      }
-    </div>
+    <mat-card class="text-align-center max-width card-center mb-5">
+      <div class="platform-cards-container">
+        @for (account of accounts; track account.id) {
+          <app-platform-card [account]="account"></app-platform-card>
+        }
+      </div>
+    </mat-card>
+
 
     <mat-card class="max-width card-center mb-5 text-align-center">
       <h2>Follower Growth Over Time</h2>
