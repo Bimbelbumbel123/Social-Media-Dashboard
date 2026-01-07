@@ -11,7 +11,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
   styleUrl: './app.scss'
 })
 export class App {
-  private accountService = inject(AccountService);
+  private accountService = inject(AccountService)
 
   accounts = toSignal(this.accountService.getAccounts(), { initialValue: [] })
 }

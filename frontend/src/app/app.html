@@ -1,10 +1,12 @@
 <h2>Accounts</h2>
 <ul>
+
   @for(account of accounts(); track account.id) {
     <li>{{ account.platform }} {{ account.username }}, likes: {{ account.likes }}, clicks: {{ account.clicks }}</li>
   } @empty {
     <li>There are no items.</li>
   }
+
 </ul>
 
 <router-outlet></router-outlet>

@@ -1,0 +1,40 @@
+<div class="background-color">
+  <div>
+    <div>
+      <h1>Social Media Dashboard</h1>
+      <p>Track your social media performance across all platforms</p>
+    </div>
+
+    <mat-card class="stats-card mb-5 max-width card-center">
+      <mat-card-content>
+        <div class="stats-container">
+          <div class="stat-item">
+            <p class="label">Total Followers</p>
+            <p class="value">{{ totalFollowers | number }}</p>
+          </div>
+
+          <div class="stat-item">
+            <p class="label">Average Growth</p>
+            <p class="value">{{ avgGrowth }}%</p>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+
+    <div class="text-align-center max-width card-center">
+      @for (account of accounts; track account.id) {
+        <mat-card class="mb-5">
+          <app-platform-card
+            [account]="account">
+          </app-platform-card>
+        </mat-card>
+      }
+    </div>
+
+    <mat-card class="max-width card-center mb-5 text-align-center">
+      <h2>Follower Growth Over Time</h2>
+      <app-stat-chart [data]="chartData"></app-stat-chart>
+    </mat-card>
+  </div>
+</div>

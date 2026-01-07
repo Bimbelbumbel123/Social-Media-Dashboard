@@ -1,0 +1,51 @@
+h1 {
+  text-align: center;
+}
+p {
+  text-align: center;
+}
+.stats-card {
+  padding: 8px;
+}
+
+.stats-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.label {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+}
+
+.value {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 4px 0 0 0;
+}
+.background-color{
+  background-color: rgba(246, 208, 248, 0.48);
+}
+
+.text-align-center{
+  text-align: center;
+}
+
+.mb-5{
+  margin-bottom: 10px;
+}
+
+.max-width{
+  max-width: 1500px;
+}
+
+.card-center {
+  margin-left: 100px;
+  margin-right: 100px;
+}
