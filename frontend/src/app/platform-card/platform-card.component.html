@@ -1,18 +1,16 @@
 <div
-  class="bg-gradient-to-br p-6 rounded-lg shadow-lg text-white transform transition-all hover:scale-105 hover:shadow-xl"
-  [ngClass]="getPlatformColor(account.platform)">
-  <div class="flex items-center justify-between mb-4">
-    <span class="text-4xl">{{ getPlatformIcon(account.platform) }}</span>
-    <span class="text-sm font-medium opacity-90">{{ account.platform }}</span>
+    [ngClass]="getPlatformColor(account.platform)">
+  <div>
+    <span>{{ getPlatformIcon(account.platform) }}</span>
+    <span>{{ account.platform }}</span>
   </div>
-  <h3 class="text-2xl font-bold mb-2">{{ account.followers | number }}</h3>
-  <p class="text-sm opacity-90 mb-3">Followers</p>
-  <div class="flex items-center">
+  <h3>{{ account.followers | number }}</h3>
+  <p>Followers</p>
+  <div>
     <span
-      class="text-sm font-semibold"
       [ngClass]="account.growth >= 0 ? 'text-green-200' : 'text-red-200'">
       {{ account.growth >= 0 ? '↑' : '↓' }} {{ account.growth >= 0 ? account.growth : -account.growth }}%
     </span>
-    <span class="text-xs opacity-75 ml-2">vs last month</span>
+    <span>vs last month</span>
   </div>
 </div>
