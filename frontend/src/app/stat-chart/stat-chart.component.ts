@@ -44,21 +44,21 @@ export class StatChartComponent implements AfterViewInit {
           {
             label: 'TikTok',
             data: this.data.map(d => d.TikTok),
-            borderColor: '#EE1D52',
+            borderColor: '#5ddbe1',
             backgroundColor: 'rgba(238, 29, 82, 0.1)',
             tension: 0.4
           },
           {
             label: 'Instagram',
             data: this.data.map(d => d.Instagram),
-            borderColor: '#E4405F',
+            borderColor: '#f2adf6',
             backgroundColor: 'rgba(228, 64, 95, 0.1)',
             tension: 0.4
           },
           {
             label: 'Twitch',
             data: this.data.map(d => d.Twitch),
-            borderColor: '#9146FF',
+            borderColor: '#ce27f3',
             backgroundColor: 'rgba(145, 70, 255, 0.1)',
             tension: 0.4
           }
