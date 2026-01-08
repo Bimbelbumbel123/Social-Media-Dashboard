@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_05_073701) do
+ActiveRecord::Schema[8.0].define(version: 2026_01_08_104730) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -25,6 +25,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_05_073701) do
     t.integer "posts_count"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "platform_user_id"
+    t.string "access_token"
+    t.string "refresh_token"
+    t.datetime "token_expires_at"
   end
 
   create_table "platforms", force: :cascade do |t|

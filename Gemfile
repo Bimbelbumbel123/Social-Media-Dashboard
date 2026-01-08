@@ -50,3 +50,9 @@ end
 gem "sprockets-rails", "~> 3.5"
 
 gem "tailwindcss-rails", "~> 4.4"
+
+# Authentication for the platforms
+gem "omniauth"
+gem "omniauth-google-oauth2"  # YouTube
+gem "omniauth-twitch"         # Twitch
+gem "faraday"                 # TikTok & Instagram manual
