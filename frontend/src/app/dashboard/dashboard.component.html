@@ -9,6 +9,16 @@
       <mat-card-content>
         <div class="stats-container">
           <div class="stat-item">
+
+            @if (!isYoutubeConnected()) {
+            <button (click)="connectYoutube()">
+              Connect to YouTube
+            </button>
+            }
+        <!--    @if (isYoutubeConnected()){
+            <p>YouTube already connected </p>
+            }
+         -->
             <p class="label">Total Followers</p>
             <p class="value">{{ totalFollowers | number }}</p>
           </div>

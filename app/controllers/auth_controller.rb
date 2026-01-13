@@ -14,7 +14,7 @@ class AuthController < ApplicationController
     account.token_expires_at = Time.at(auth.credentials.expires_at) if auth.credentials.expires_at
     account.save!
 
-    redirect_to "/dashboard"
+    redirect_to ENV["FRONTEND_URL"] || "http://localhost:4200/dashboard"
   end
 
   def failure

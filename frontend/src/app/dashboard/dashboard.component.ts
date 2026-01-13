@@ -1,9 +1,8 @@
-import { Component } from '@angular/core';
-import {DecimalPipe} from '@angular/common';
-import {PlatformCardComponent} from '../platform-card/platform-card.component';
-import {StatChartComponent} from '../stat-chart/stat-chart.component';
+import { Component, signal } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
+import { PlatformCardComponent } from '../platform-card/platform-card.component';
+import { StatChartComponent } from '../stat-chart/stat-chart.component';
 import { MatCardModule } from '@angular/material/card';
-
 
 export interface Account {
   id: number;
@@ -22,6 +21,7 @@ export interface ChartData {
 
 @Component({
   selector: 'app-dashboard',
+  standalone: true,
   imports: [
     DecimalPipe,
     PlatformCardComponent,
@@ -29,18 +29,19 @@ export interface ChartData {
     MatCardModule
   ],
   templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss'
+  styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {
   constructor() {
-    console.error('hey')
+    console.log('Dashboard loaded');
   }
 
+
   accounts: Account[] = [
-    {id: 1, platform: 'YouTube', followers: 125000, growth: 12.5 },
-    {id: 2, platform: 'TikTok', followers: 89000, growth: 24.3 },
-    {id: 3, platform: 'Instagram', followers: 156000, growth: 8.7 },
-    {id: 4, platform: 'Twitch', followers: 45000, growth: -3.2 }
+    { id: 1, platform: 'YouTube', followers: 125000, growth: 12.5 },
+    { id: 2, platform: 'TikTok', followers: 89000, growth: 24.3 },
+    { id: 3, platform: 'Instagram', followers: 156000, growth: 8.7 },
+    { id: 4, platform: 'Twitch', followers: 45000, growth: -3.2 }
   ];
 
   chartData: ChartData[] = [
@@ -51,6 +52,9 @@ export class DashboardComponent {
     { month: 'May', YouTube: 120000, TikTok: 84000, Instagram: 148000, Twitch: 45500 },
     { month: 'Jun', YouTube: 125000, TikTok: 89000, Instagram: 156000, Twitch: 45000 }
   ];
+
+
+
 
   get totalFollowers(): number {
     return this.accounts.reduce((sum, acc) => sum + acc.followers, 0);
@@ -63,5 +67,28 @@ export class DashboardComponent {
 
   trackById(index: number, account: Account): number {
     return account.id;
+  }
+
+  isYoutubeConnected = signal(this.accounts.some(acc => acc.platform === "YouTube"));
+  connectYoutube() {
+    window.location.href = "http://localhost:3001/auth/google_oauth2";
+  }
+
+  checkConnections(accounts: Account[]) {
+    this.isYoutubeConnected.set(accounts.some(acc => acc.platform === "YouTube"));
+  }
+
+  loadDashboard() {
+    fetch('http://localhost:3001/api/v1/dashboard')
+      .then(res => res.json())
+      .then(data => {
+
+        this.checkConnections(data);
+      })
+      .catch(err => console.error('Error occurred while loading dashboards', err));
+  }
+
+  ngOnInit() {
+    this.loadDashboard();
   }
 }
