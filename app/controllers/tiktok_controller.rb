@@ -46,7 +46,7 @@ class TiktokController < ApplicationController
   private
 
   def callback_url
-    ENV["TIKTOK_REDIRECT_URI"] || "http://localhost:3000/auth/tiktok/callback"
+    ENV["TIKTOK_REDIRECT_URI"] || "http://localhost:3001/auth/tiktok/callback"
   end
 
   def exchange_code_for_token(code)

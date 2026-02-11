@@ -1,10 +1,10 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, OnInit } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { PlatformCardComponent } from '../platform-card/platform-card.component';
 import { StatChartComponent } from '../stat-chart/stat-chart.component';
 import { MatCardModule } from '@angular/material/card';
-
-
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 export interface Account {
   id: number;
@@ -28,17 +28,15 @@ export interface ChartData {
     DecimalPipe,
     PlatformCardComponent,
     StatChartComponent,
-    MatCardModule
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule
   ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent {
-  constructor() {
-    console.log('Dashboard loaded');
-  }
-
-
+export class DashboardComponent implements OnInit {
+  private backendUrl = 'http://localhost:3001';
 
   accounts: Account[] = [
     { id: 1, platform: 'YouTube', followers: 125000, growth: 12.5 },
@@ -56,42 +54,60 @@ export class DashboardComponent {
     { month: 'Jun', YouTube: 125000, TikTok: 89000, Instagram: 156000, Twitch: 45000 }
   ];
 
+  isYoutubeConnected = signal(false);
+  isTikTokConnected = signal(false);
+  isInstagramConnected = signal(false);
+  isTwitchConnected = signal(false);
 
+  constructor() {
+    console.log('Dashboard loaded');
+  }
 
+  ngOnInit() {
+    this.loadDashboard();
+  }
+
+  connectYoutube() {
+    window.location.href = `${this.backendUrl}/auth/google_oauth2`;
+  }
+
+  connectTwitch() {
+    window.location.href = `${this.backendUrl}/auth/twitch`;
+  }
+
+  connectInstagram() {
+    window.location.href = `${this.backendUrl}/auth/instagram`;
+  }
+
+  connectTiktok() {
+    window.location.href = `${this.backendUrl}/auth/tiktok`;
+  }
+
+  loadDashboard() {
+    fetch(`${this.backendUrl}/api/v1/dashboard`)
+      .then(res => res.json())
+      .then(data => {
+        // Hier würdest du normalerweise this.accounts = data setzen,
+        // wenn das Backend bereits die echten Daten liefert.
+        this.checkConnections(data);
+      })
+      .catch(err => console.error('Error occurred while loading dashboard', err));
+  }
+
+  checkConnections(accounts: Account[]) {
+    this.isYoutubeConnected.set(accounts.some(acc => acc.platform === "YouTube"));
+    this.isTikTokConnected.set(accounts.some(acc => acc.platform === "TikTok"));
+    this.isInstagramConnected.set(accounts.some(acc => acc.platform === "Instagram"));
+    this.isTwitchConnected.set(accounts.some(acc => acc.platform === "Twitch"));
+  }
 
   get totalFollowers(): number {
     return this.accounts.reduce((sum, acc) => sum + acc.followers, 0);
   }
 
   get avgGrowth(): number {
+    if (this.accounts.length === 0) return 0;
     const sum = this.accounts.reduce((total, acc) => total + acc.growth, 0);
     return Math.round((sum / this.accounts.length) * 10) / 10;
-  }
-
-  trackById(index: number, account: Account): number {
-    return account.id;
-  }
-
-  isYoutubeConnected = signal(this.accounts.some(acc => acc.platform === "YouTube"));
-  connectYoutube() {
-    window.location.href = "http://localhost:3001/auth/google_oauth2";
-  }
-
-  checkConnections(accounts: Account[]) {
-    this.isYoutubeConnected.set(accounts.some(acc => acc.platform === "YouTube"));
-  }
-
-  loadDashboard() {
-    fetch('http://localhost:3001/api/v1/dashboard')
-      .then(res => res.json())
-      .then(data => {
-
-        this.checkConnections(data);
-      })
-      .catch(err => console.error('Error occurred while loading dashboards', err));
-  }
-
-  ngOnInit() {
-    this.loadDashboard();
   }
 }

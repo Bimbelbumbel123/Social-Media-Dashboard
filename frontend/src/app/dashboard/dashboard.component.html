@@ -9,16 +9,44 @@
       <mat-card-content>
         <div class="stats-container">
           <div class="stat-item">
+            <p class="label">Connect Platforms</p>
+            <div class="button-group">
 
-       <!--     @if (!isYoutubeConnected()) { -->
-            <button (click)="connectYoutube()">
-              Connect to YouTube
-            </button>
-        <!--    } -->
-        <!--    @if (isYoutubeConnected()){
-            <p>YouTube already connected </p>
-            }
-         -->
+              @if (!isYoutubeConnected()) {
+                <button mat-raised-button class="btn-youtube" (click)="connectYoutube()">
+                  <mat-icon>play_circle</mat-icon> Connect YouTube
+                </button>
+              } @else {
+                <span class="connected-badge youtube"><mat-icon>check</mat-icon> YouTube Connected</span>
+              }
+
+              @if (!isTwitchConnected()) {
+                <button mat-raised-button class="btn-twitch" (click)="connectTwitch()">
+                  <mat-icon>videogame_asset</mat-icon> Connect Twitch
+                </button>
+              } @else {
+                <span class="connected-badge twitch"><mat-icon>check</mat-icon> Twitch Connected</span>
+              }
+
+              @if (!isInstagramConnected()) {
+                <button mat-raised-button class="btn-instagram" (click)="connectInstagram()">
+                  <mat-icon>camera_alt</mat-icon> Connect Instagram
+                </button>
+              } @else {
+                <span class="connected-badge instagram"><mat-icon>check</mat-icon> Instagram Connected</span>
+              }
+
+              @if (!isTikTokConnected()) {
+                <button mat-raised-button class="btn-tiktok" (click)="connectTiktok()">
+                  <mat-icon>music_note</mat-icon> Connect TikTok
+                </button>
+              } @else {
+                <span class="connected-badge tiktok"><mat-icon>check</mat-icon> TikTok Connected</span>
+              }
+            </div>
+          </div>
+
+          <div class="stat-item">
             <p class="label">Total Followers</p>
             <p class="value">{{ totalFollowers | number }}</p>
           </div>
@@ -31,7 +59,6 @@
       </mat-card-content>
     </mat-card>
 
-
     <mat-card class="text-align-center max-width card-center mb-5">
       <div class="platform-cards-container">
         @for (account of accounts; track account.id) {
@@ -39,7 +66,6 @@
         }
       </div>
     </mat-card>
-
 
     <mat-card class="max-width card-center mb-5 text-align-center platform-cards-container">
       <h2>Follower Growth Over Time</h2>
