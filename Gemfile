@@ -59,4 +59,5 @@ gem "omniauth-rails_csrf_protection"
 gem "devise"
 gem "omniauth-oauth2"  # YouTube
 gem "omniauth-twitch"         # Twitch
-gem "faraday"                 # TikTok & Instagram manual
+gem "faraday"
+gem 'dotenv-rails', groups: [:development, :test]# TikTok & Instagram manual
