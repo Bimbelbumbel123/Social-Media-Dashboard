@@ -4,6 +4,8 @@ import { PlatformCardComponent } from '../platform-card/platform-card.component'
 import { StatChartComponent } from '../stat-chart/stat-chart.component';
 import { MatCardModule } from '@angular/material/card';
 
+
+
 export interface Account {
   id: number;
   platform: string;
@@ -35,6 +37,7 @@ export class DashboardComponent {
   constructor() {
     console.log('Dashboard loaded');
   }
+
 
 
   accounts: Account[] = [

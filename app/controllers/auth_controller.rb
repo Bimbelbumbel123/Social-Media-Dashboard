@@ -2,22 +2,16 @@ class AuthController < ApplicationController
   def callback
     auth = request.env["omniauth.auth"]
 
-    platform = Platform.find_or_create_by(platform_name: auth.provider)
-    account = Account.find_or_initialize_by(
-      platform_user_id: auth.uid,
-      platform: platform
-    )
+    @account = Account.from_omniauth(auth, current_user)
 
-    account.username = auth.info.name
-    account.access_token = auth.credentials.token
-    account.refresh_token = auth.credentials.refresh_token
-    account.token_expires_at = Time.at(auth.credentials.expires_at) if auth.credentials.expires_at
-    account.save!
-
-    redirect_to ENV["FRONTEND_URL"] || "http://localhost:4200/dashboard"
+    if @account.persisted?
+      redirect_to "http://localhost:4200/dashboard?success=true", allow_other_host: true
+    else
+      render json: { error: "Account can't be saved!" }, status: :unprocessable_entity
+    end
   end
 
   def failure
-    render json: { error: params[:message] }, status: :unauthorized
+    redirect_to "http://localhost:4200/dashboard?error=#{params[:message]}", allow_other_host: true
   end
 end

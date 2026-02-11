@@ -55,6 +55,8 @@ gem "tailwindcss-rails", "~> 4.4"
 gem "omniauth"
 gem "omniauth-github"
 gem "omniauth-google-oauth2"
+gem "omniauth-rails_csrf_protection"
+gem "devise"
 gem "omniauth-oauth2"  # YouTube
 gem "omniauth-twitch"         # Twitch
 gem "faraday"                 # TikTok & Instagram manual

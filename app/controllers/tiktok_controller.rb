@@ -1,35 +1,66 @@
-# app/controllers/tiktok_controller.rb
 class TiktokController < ApplicationController
+  # before_action :authenticate_user!
+
   def redirect
-    redirect_to "https://www.tiktok.com/v2/auth/authorize/?" \
-                  "client_key=#{ENV['TIKTOK_CLIENT_KEY']}" \
-                  "&scope=user.info.basic,video.list" \
-                  "&response_type=code" \
-                  "&redirect_uri=#{ENV['TIKTOK_REDIRECT_URI']}"
+    session[:oauth_state] = SecureRandom.hex(16)
+
+    url = "https://www.tiktok.com/v2/auth/authorize/?" + {
+      client_key: ENV["TIKTOK_CLIENT_KEY"],
+      scope: "user.info.basic,user.info.stats", # Mehr Rechte für das Dashboard
+      response_type: "code",
+      redirect_uri: callback_url,
+      state: session[:oauth_state]
+    }.to_query
+
+    redirect_to url, allow_other_host: true
   end
 
   def callback
-    response = Faraday.post("https://open.tiktokapis.com/v2/oauth/token/") do |req|
-      req.headers["Content-Type"] = "application/x-www-form-urlencoded"
-      req.body = {
-        client_key: ENV["TIKTOK_CLIENT_KEY"],
-        client_secret: ENV["TIKTOK_CLIENT_SECRET"],
-        code: params[:code],
-        grant_type: "authorization_code",
-        redirect_uri: ENV["TIKTOK_REDIRECT_URI"]
-      }
+    return redirect_to "http://localhost:4200/dashboard?error=invalid_state" if params[:state] != session[:oauth_state]
+
+    response_data = exchange_code_for_token(params[:code])
+
+    token_data = response_data["data"] || response_data
+
+    if token_data["access_token"]
+      platform = Platform.find_or_create_by!(name: "Tiktok")
+
+      account = current_user.accounts.find_or_initialize_by(
+        platform: platform,
+        platform_user_id: token_data["open_id"]
+      )
+
+      account.update!(
+        access_token: token_data["access_token"],
+        refresh_token: token_data["refresh_token"],
+        token_expires_at: Time.current + token_data["expires_in"].to_i.seconds,
+        username: "TikTok User"
+      )
+
+      redirect_to "http://localhost:4200/dashboard?success=tiktok", allow_other_host: true
+    else
+      redirect_to "http://localhost:4200/dashboard?error=tiktok_auth_failed", allow_other_host: true
     end
+  end
 
-    data = JSON.parse(response.body)["data"]
-    platform = Platform.find_or_create_by(platform_name: "tiktok")
-    account = Account.find_or_initialize_by(platform_user_id: data["open_id"], platform: platform)
+  private
 
-    account.username = data["union_id"]
-    account.access_token = data["access_token"]
-    account.refresh_token = data["refresh_token"]
-    account.token_expires_at = Time.now + data["expires_in"].to_i.seconds
-    account.save!
+  def callback_url
+    ENV["TIKTOK_REDIRECT_URI"] || "http://localhost:3000/auth/tiktok/callback"
+  end
 
-    redirect_to "/dashboard"
+  def exchange_code_for_token(code)
+    # 
+    uri = URI("https://open.tiktokapis.com/v2/oauth/token/")
+
+    res = Net::HTTP.post_form(uri, {
+      client_key: ENV["TIKTOK_CLIENT_KEY"],
+      client_secret: ENV["TIKTOK_CLIENT_SECRET"],
+      code: code,
+      grant_type: "authorization_code",
+      redirect_uri: callback_url
+    })
+
+    JSON.parse(res.body)
   end
 end
