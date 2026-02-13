@@ -11,4 +11,5 @@ Rails.application.config.middleware.use OmniAuth::Builder do
            ENV["TWITCH_CLIENT_SECRET"],
            scope: "user:read:email"
 
+
 end
