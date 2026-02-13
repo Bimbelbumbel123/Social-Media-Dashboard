@@ -1,7 +1,7 @@
 module Api
   module V1
     class DashboardController < ApplicationController
-      # before_action :authenticate_user!
+      before_action :authenticate_user!
 
       def index
         accounts = current_user.accounts.includes(:platform, :stats)
@@ -25,6 +25,18 @@ module Api
             end
           }
         }
+      end
+
+      private
+
+      def current_user
+        @current_user ||= User.find_by(id: session[:user_id])
+      end
+
+      def authenticate_user!
+        unless current_user
+          render json: { error: "Unauthorized" }, status: :unauthorized
+        end
       end
     end
   end
